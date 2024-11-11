@@ -1,4 +1,7 @@
+const form = document.querySelector("form");
 const amount = document.getElementById("amount");
+const expense = document.querySelector("#expense");
+const category = document.querySelector("#category");
 
 
 amount.oninput = () => {
@@ -15,4 +18,8 @@ function formatCurrencyBrl(value) {
     })
 
     return value 
+}
+
+form.onsubmit = (event) =>  {
+    event.preventDefault();
 }
