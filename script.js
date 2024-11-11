@@ -2,6 +2,17 @@ const amount = document.getElementById("amount");
 
 
 amount.oninput = () => {
-    const value = amount.value.replace(/\D/g, "");
-    amount.value = value;
+    let value = amount.value.replace(/\D/g, "");
+    // Aplicando a formatação do value para numero e junto para centavos
+    value = Number(value) / 100;
+    amount.value = formatCurrencyBrl(value);
+}
+
+function formatCurrencyBrl(value) {
+    value = value.toLocaleString("pt-BR", {
+        style: "currency",
+        currency: "BRL"
+    })
+
+    return value 
 }
