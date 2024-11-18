@@ -2,6 +2,7 @@ const form = document.querySelector("form");
 const amount = document.getElementById("amount");
 const expense = document.querySelector("#expense");
 const category = document.querySelector("#category");
+const expenseList = document.querySelector("ul")
 
 // Formatando o valor do input para moeda
 amount.oninput = () => {
@@ -34,5 +35,29 @@ form.onsubmit = (event) =>  {
         created_at: new Date(),
     }
     
+    expenseAdd(newExpense);
 }
 
+function expenseAdd(newExpense) {
+    try {
+        // Cria o elemento para adicionar o item (li) na lista(ul)
+        const expenseItem = document.createElement("li");
+        expenseItem.classList.add("expense");
+
+        // Cria o icone da categoria e add caminho e alt
+        const expenseIcon = document.createElement("img");
+        expenseIcon.setAttribute("src", `img/${newExpense.category_id}.svg`);
+        expenseIcon.setAttribute("alt", newExpense.category_name);
+
+        // Adiciona o Icon no item.
+        expenseItem.append(expenseIcon);
+
+        // Adiciona o item a lista.
+        expenseList.append(expenseItem)
+
+    } catch (error) {
+        alert("Não foi possivel adicionar a despesa")
+        console.log(error);
+        
+    }
+}
