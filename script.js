@@ -3,7 +3,7 @@ const amount = document.getElementById("amount");
 const expense = document.querySelector("#expense");
 const category = document.querySelector("#category");
 const expenseList = document.querySelector("ul")
-
+const expenseQuantity = document.querySelector("aside header p span");
 // Formatando o valor do input para moeda
 amount.oninput = () => {
     let value = amount.value.replace(/\D/g, "");
@@ -37,7 +37,7 @@ form.onsubmit = (event) =>  {
     
     expenseAdd(newExpense);
 }
-
+// Função para adicionar a despesa na lista
 function expenseAdd(newExpense) {
     try {
         // Cria o elemento para adicionar o item (li) na lista(ul)
@@ -80,9 +80,22 @@ function expenseAdd(newExpense) {
         // Adiciona o item a lista.
         expenseList.append(expenseItem)
 
+        // Atualiza o total de despesas
+        updateTotals();
     } catch (error) {
         alert("Não foi possivel adicionar a despesa")
         console.log(error);
         
+    }
+}
+
+function updateTotals() {
+    try {
+        // Recupera todos os itens (li) da lista (ul)
+        const items = expenseList.children;
+        expenseQuantity.textContent = `${items.length} ${items.length > 1 ? "despesas" : "despesa"}`;
+    } catch (error) {
+        console.log(error);
+        alert("Não foi possivel atualizar o total.")
     }
 }
