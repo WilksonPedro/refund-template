@@ -127,3 +127,12 @@ function updateTotals() {
         alert("Não foi possivel atualizar o total.")
     }
 }
+// Evento que captura o click no icone de remover
+expenseList.addEventListener("click", function (event) {
+    if (event.target.classList.contains("remove-icon")) {
+        //Obtem a LI pai do elemento clicado
+        const item = event.target.closest(".expense")
+        item.remove();
+    }
+    updateTotals();
+})
