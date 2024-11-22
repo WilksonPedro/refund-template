@@ -2,8 +2,9 @@ const form = document.querySelector("form");
 const amount = document.getElementById("amount");
 const expense = document.querySelector("#expense");
 const category = document.querySelector("#category");
-const expenseList = document.querySelector("ul")
+const expenseList = document.querySelector("ul");
 const expenseQuantity = document.querySelector("aside header p span");
+const expensesTotal = document.querySelector("aside header h2")
 // Formatando o valor do input para moeda
 amount.oninput = () => {
     let value = amount.value.replace(/\D/g, "");
@@ -94,6 +95,33 @@ function updateTotals() {
         // Recupera todos os itens (li) da lista (ul)
         const items = expenseList.children;
         expenseQuantity.textContent = `${items.length} ${items.length > 1 ? "despesas" : "despesa"}`;
+        // Percorrendo cada item da (li)
+        let total = 0;
+        for(let index = 0; index < items.length; index++) {
+            const itemAmount = items[index].querySelector(".expense-amount")
+            // Recuperando o valor do item e convertendo para numero
+            let value  = itemAmount.textContent.replace(/[^\d,]/g, "").replace(",", ".");
+            // convertendo um numero com ponto flutuante
+            value = parseFloat(value);
+
+            if(isNaN(value)) {
+                return alert("Não foi possivel calcular o total.")
+            }
+
+            // Incrementando o valor total com value
+            total += Number(value);
+            expensesTotal.textContent = total;
+        }
+
+        // Cria a span para adicionar o R$ formatado.
+        const symbolBRL = document.createElement("small");
+        symbolBRL.textContent = "R$";
+        // Formata o valor e remove o R$ que seria colocado antes pelo total
+        total = formatCurrencyBrl(total).toUpperCase().replace("R$", "");
+        // Limpa o conteudo do elemento
+        expensesTotal.innerHTML = "";
+        // Adiciona o simbolo e o valor formatado
+        expensesTotal.append(symbolBRL, total);
     } catch (error) {
         console.log(error);
         alert("Não foi possivel atualizar o total.")
